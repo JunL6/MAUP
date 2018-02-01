@@ -33,33 +33,16 @@ def get_data(cursor):
     df_origindata = df_origindata.append(cursor.fetchmany(12))
     df_origindata.columns = ['user_id', 'lat', 'lon', 'provider', 'accu', 'record_time', 'date']
 
-### get same id record in one dataframe
-def contain_sameid():
-    df_singleid = pd.DataFrame()
-    global df_origindata
-    id_current = df_origindata['user_id'][0]
-    i = 1
+###compare time
+def comparetime():
+    
 
-    while i < len(df_origindata):
-        record = df_origindata[i: i+1]
-        print(record)
-        #判断是否同一id
 
-        if record['user_id'][i] == id_current:
-            df_singleid = df_singleid.append(record)
-        else:
-            aggregate_gps(df_singleid)
-            id_current = record['user_id'][i]
-            df_singleid = df_singleid.drop(df_singleid.index, inplace=True)
-            df_singleid = df_singleid.append(record)
-        i = i + 1
 
-    print(df_singleid)
 
-###
-#function: aggregate gps data
-def aggregate_gps(df_sameid):
-    pass
+
+
+
 
 ### main function
 if __name__ == '__main__':
