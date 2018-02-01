@@ -85,28 +85,27 @@ def plot_gps(dataframe):
     geoplotlib.show()
 
 #Connect to database
-try:
-    conn = mysql.connector.connect(user='jul077', password='abgEFIJXl_%Q17',
-                                   host='crepe.usask.ca',
-                                   database='SHED10')
-    if conn.is_connected():
-        print("PPP:Successfully connected to MYSQL database")
-        cursor = conn.cursor()
-
-        #get data from Battery table
-        #gettable(tableName = "battery", cursor = cursor)
-
-        #get user_id where number of record > 50%
-        get_gpsdata_oneoffilter50_saskatoon(cursor)
-
-        cursor.close()
-except Error as e:
-    print(e)
-finally:
-    conn.close()
-    print("PPP:Connection closed")
 def connectdatabase():
-    pass
+    try:
+        conn = mysql.connector.connect(user='jul077', password='abgEFIJXl_%Q17',
+                                       host='crepe.usask.ca',
+                                       database='SHED10')
+        if conn.is_connected():
+            print("PPP:Successfully connected to MYSQL database")
+            cursor = conn.cursor()
+
+            #get data from Battery table
+            #gettable(tableName = "battery", cursor = cursor)
+
+            #get user_id where number of record > 50%
+            get_gpsdata_oneoffilter50_saskatoon(cursor)
+
+            cursor.close()
+    except Error as e:
+        print(e)
+    finally:
+        conn.close()
+        print("PPP:Connection closed")
 
 
 if __name__ == '__main__':
