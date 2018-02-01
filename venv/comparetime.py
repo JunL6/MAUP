@@ -35,9 +35,14 @@ def get_data(cursor):
 
 ###compare time
 def comparetime():
-    
+    # print(df_origindata['record_time'][0])
+    delta = (df_origindata['record_time'][1] - df_origindata['record_time'][0]).total_seconds()
+    print(delta)
+    print('type: ', type(delta))
+    print(delta < 300)
 
-
+    # delta_seconds = delta.total_seconds()
+    # print(delta_seconds)
 
 
 
@@ -49,4 +54,4 @@ if __name__ == '__main__':
     connectdatabase()
     # contain_sameid()
     # df_origindata = df_origindata.sort_values(by=['user_id', 'record_time'])
-    print(df_origindata)
+    comparetime()
