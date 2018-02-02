@@ -65,4 +65,5 @@ if __name__ == '__main__':
     connectdatabase()
     # contain_sameid()
     # df_origindata = df_origindata.sort_values(by=['user_id', 'record_time'])
-    comparetime()
+    # comparetime()
+    print(df_origindata)

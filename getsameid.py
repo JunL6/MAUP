@@ -10,7 +10,7 @@ pd.set_option('display.width',1000)
 
 #global dataframe
 df_origindata = pd.DataFrame()
-df_aggregated = pd.DataFrame()
+df_aggregateddata = pd.DataFrame(columns=['user_id', 'lat', 'lon', 'record_time'])
 
 ### get data
 def connectdatabase():
@@ -59,7 +59,7 @@ def contain_sameid():
             pass
             aggregate_data(df_singleid)
             id_current = record['user_id'][i]
-            df_singleid = df_singleid.drop(df_singleid.index, inplace=True)
+            df_singleid.drop(df_singleid.index, inplace=True)
             df_singleid = df_singleid.append(record)
         i = i + 1
 
@@ -97,9 +97,31 @@ def aggregate_data(df_sameid):
 
 #function: aggregate gps data within same ducy circle
 def aggregate_singledc(df_singledc):
-    print(df_singledc)
-    print('...................................')
-    pass
+    # print(df_singledc)
+    # print('...................................')
+    lat_total = 0
+    lon_total = 0
+    i = df_singledc.head(1).index.values[0]
+    user_id = df_singledc['user_id'][i]
+    record_time = df_singledc['record_time'][i]
+    round = len(df_singledc) + i
+    while i < round:
+        lat_total = lat_total + df_singledc['lat'][i]
+        lon_total = lon_total + df_singledc['lon'][i]
+        i = i+1
+
+    lat_average = lat_total/len(df_singledc)
+    lon_average = lon_total/len(df_singledc)
+
+    global df_aggregateddata
+    df_singleaggregateddate = pd.DataFrame(
+        {'user_id': [user_id], 'lat': [lat_average], 'lon': [lon_average], 'record_time': [record_time]},
+        columns=['user_id', 'lat', 'lon', 'record_time'])
+    # print(df_singleaggregateddate)
+    df_aggregateddata = df_aggregateddata.append(df_singleaggregateddate)
+
+
+
 
 
 ### main function
@@ -109,3 +131,4 @@ if __name__ == '__main__':
     # print("..............................")
     contain_sameid()
     # df_origindata = df_origindata.sort_values(by=['user_id', 'record_time'])
+    print(df_aggregateddata)
