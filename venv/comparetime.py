@@ -44,11 +44,11 @@ def comparetime():
         print('>=300')
 
     print(delta)
-    if delta < 300:
-        print("delta < 300")
-    else:
-        print("delta >= 300")
-    print(df_origindata.head(10))
+    # if delta < 300:
+    #     print("delta < 300")
+    # else:
+    #     print("delta >= 300")
+    # print(df_origindata.head(10))
     # print('type: ', type(delta))
     # # print(delta < 300)
 

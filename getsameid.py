@@ -63,14 +63,42 @@ def contain_sameid():
             df_singleid = df_singleid.append(record)
         i = i + 1
 
-
+    aggregate_data(df_singleid)
 ###
 #function: aggregate gps data
 def aggregate_data(df_sameid):
-    pass
+    i = df_sameid.head(1).index.values[0]
+    j_first = i
+    df_singledc = pd.DataFrame()
+    round = len(df_sameid) + i
+    print('round: ', round)
+    while i < round:
+        df_singledc = df_singledc.append(df_sameid[i: i+1])
+        # print((i+1)!=round)
+        if (i+1) != round: #到底了s
+            # print('i: ', i)
+            # print(df_singledc)
+            if (df_sameid['record_time'][i+1] -df_sameid['record_time'][j_first]).total_seconds() < 300:
+                pass
+                # print(j_first, ', ', i, ': ', '<300')
+            else:
+                aggregate_singledc(df_singledc)
+                # print(df_singledc)
+                # print('..........................')
+                df_singledc.drop(df_singledc.index, inplace=True)
+                j_first = i+1
+                # print(j_first, ', ', i, ': ', '>= 300')
+        else:
+            aggregate_singledc(df_singledc)
+
+        i = i+1
+
+
 
 #function: aggregate gps data within same ducy circle
 def aggregate_singledc(df_singledc):
+    print(df_singledc)
+    print('...................................')
     pass
 
 
