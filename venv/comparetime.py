@@ -36,10 +36,21 @@ def get_data(cursor):
 ###compare time
 def comparetime():
     # print(df_origindata['record_time'][0])
-    delta = (df_origindata['record_time'][1] - df_origindata['record_time'][0]).total_seconds()
+    delta = (df_origindata['record_time'][6] - df_origindata['record_time'][5]).total_seconds()
+    if (df_origindata['record_time'][6] - df_origindata['record_time'][5]).total_seconds() < 300:
+    # if delta < 300:
+        print('<300')
+    else:
+        print('>=300')
+
     print(delta)
-    print('type: ', type(delta))
-    print(delta < 300)
+    if delta < 300:
+        print("delta < 300")
+    else:
+        print("delta >= 300")
+    print(df_origindata.head(10))
+    # print('type: ', type(delta))
+    # # print(delta < 300)
 
     # delta_seconds = delta.total_seconds()
     # print(delta_seconds)

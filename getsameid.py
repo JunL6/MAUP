@@ -2,8 +2,15 @@ import mysql.connector
 from mysql.connector import Error
 import pandas as pd
 
+#display dataframe
+pd.set_option('display.height',1000)
+pd.set_option('display.max_rows',500)
+pd.set_option('display.max_columns',500)
+pd.set_option('display.width',1000)
+
 #global dataframe
 df_origindata = pd.DataFrame()
+df_aggregated = pd.DataFrame()
 
 ### get data
 def connectdatabase():
@@ -38,32 +45,39 @@ def contain_sameid():
     df_singleid = pd.DataFrame()
     global df_origindata
     id_current = df_origindata['user_id'][0]
+    df_singleid = df_singleid.append(df_origindata[0: 1])
+
     i = 1
 
     while i < len(df_origindata):
         record = df_origindata[i: i+1]
-        print(record)
-        #判断是否同一id
 
+        #判断是否同一id
         if record['user_id'][i] == id_current:
             df_singleid = df_singleid.append(record)
         else:
-            aggregate_gps(df_singleid)
+            pass
+            aggregate_data(df_singleid)
             id_current = record['user_id'][i]
             df_singleid = df_singleid.drop(df_singleid.index, inplace=True)
             df_singleid = df_singleid.append(record)
         i = i + 1
 
-    print(df_singleid)
 
 ###
 #function: aggregate gps data
-def aggregate_gps(df_sameid):
+def aggregate_data(df_sameid):
     pass
+
+#function: aggregate gps data within same ducy circle
+def aggregate_singledc(df_singledc):
+    pass
+
 
 ### main function
 if __name__ == '__main__':
     connectdatabase()
-    # contain_sameid()
+    # print(df_origindata)
+    # print("..............................")
+    contain_sameid()
     # df_origindata = df_origindata.sort_values(by=['user_id', 'record_time'])
-    print(df_origindata)
