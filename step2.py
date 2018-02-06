@@ -32,12 +32,15 @@ def connectdatabase():
         conn.close()
         print("PPP:Connection closed")
 
+
+
 sql_gpsdata_filter50_saskatoon = 'select T2.user_id, T2.lat, T2.lon, T2.provider, T2.accu, T2.record_time, T2.date from (select T1.user_id, gps.lat, gps.lon, gps.provider, gps.accu, gps.record_time, gps.date from (select user_id, count_batteryrecord from (select user_id, count(*) as count_batteryrecord from battery group by user_id) as T where count_batteryrecord > 4176) as T1 left join gps on T1.user_id = gps.user_id) as T2 where T2.lat between 52.058367 and 52.214608 and T2.lon between -106.7649138128 and -106.52225318 and T2.accu<100'
 def get_data(cursor):
     cursor.execute(sql_gpsdata_filter50_saskatoon)
     global df_origindata
     # df_origindata = df_origindata.append(cursor.fetchmany(127945))
-    df_origindata = df_origindata.append(cursor.fetchmany(12))
+    # df_origindata = df_origindata.append(cursor.fetchmany(9999))
+    df_origindata = df_origindata.append(cursor.fetchall())
     df_origindata.columns = ['user_id', 'lat', 'lon', 'provider', 'accu', 'record_time', 'date']
 
 ### get same id record in one dataframe
@@ -126,9 +129,10 @@ def aggregate_singledc(df_singledc):
 
 ### main function
 if __name__ == '__main__':
+    # connect to the database
     connectdatabase()
-    # print(df_origindata)
-    # print("..............................")
+    #  aggregate the data
     contain_sameid()
-    # df_origindata = df_origindata.sort_values(by=['user_id', 'record_time'])
-    print(df_aggregateddata)
+#   convert the gps data to UTM
+    pass
+#    generate a heatmap
